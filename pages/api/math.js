@@ -1,5 +1,10 @@
 export default function math(req, res) {
-    if(req.body) {res.sendStatus(403); };
-    const result = req.body.a * req.body.b;
-    res.status(200).json({ 'message': `The sum is: ${result}`});
+    if(!req.query) { res.status(403).json({ 'message': 'Parameters not found' }); };
+    let result = null;
+    try {
+        result = req.query.a * req.query.b;
+    } catch (error) {
+        res.status(403).json({ 'message': error });
+    }
+    res.status(200).json({ 'message': `The result is: ${result}`});
 }
